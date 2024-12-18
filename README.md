@@ -103,42 +103,7 @@ The platform targets stakeholders in the CMAM program, including:
    - Generate and view summary statistics.
 5. **Data Export**:
    - Download reports in CSV or PDF format.
-
----
-
-### **Mock-Up and UX Design**
-#### **Landing Page**:
-- Overview of CMAM and platform functionality.
-- Call-to-action for logging in (for registered users) and accessing general information (for visitors).
-
-#### **Dashboard**:
-- Role-specific dashboards displaying relevant data and quick links.
-- Key metrics visualized with charts (e.g., patient recovery rates, program attendance).
-
-#### **Patient Management Page**:
-- Form for adding or updating patient records.
-- Search functionality for quick access to existing records.
-
----
-
-### **Development Timeline**
-1. **Week 1**:
-   - Set up project structure and environment.
-   - Build database schema and backend API endpoints.
-2. **Week 2**:
-   - Develop frontend components (React).
-   - Integrate APIs with frontend.
-   - Implement role-based authentication.
-3. **Week 3**:
-   - Finalize dashboards and patient management features.
-   - Add data visualization with Chart.js.
-   - Test end-to-end functionality.
-4. **Week 4**:
-   - Optimize performance (e.g., caching with Redis).
-   - Deploy application on GCP.
-   - Prepare documentation and user guide.
-
----
+   
 
 ### **Challenges and Mitigation**
 1. **Data Integration**:
