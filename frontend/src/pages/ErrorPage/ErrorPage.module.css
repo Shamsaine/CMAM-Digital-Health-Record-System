@@ -1,0 +1,42 @@
+.errorPage {
+    text-align: center;
+    padding: 50px 20px;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #ff6347; /* Tomato color for extra pun flavor */
+  }
+  
+  .message {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .pun {
+    font-size: 1rem;
+    margin-bottom: 30px;
+  }
+  
+  .link {
+    color: #4caf50; /* Green like kale */
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom: 2px solid #4caf50;
+  }
+  
+  .link:hover {
+    color: #388e3c; /* Darker green on hover */
+    border-color: #388e3c;
+  }
+  
+  .image {
+    width: 60%;
+    max-width: 400px;
+    margin-top: 20px;
+    border-radius: 10px;
+  }
+  
