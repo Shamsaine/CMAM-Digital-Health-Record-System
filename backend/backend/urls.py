@@ -19,5 +19,12 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('posts.urls', 'records.urls')), 
+    
+    # Separate the inclusion of URLs for each app
+    path('api/posts/', include('posts.urls')),  # Routes for the "posts" app
+    path('api/records/', include('records.urls')),  # Routes for the "records" app
+    
+    # Example for accounts or user profile, if needed
+    path('api/accounts/', include('allauth.urls')),  # Example for Django Allauth
+    path('api/profile/', include('users.urls')),  # Example for user profiles
 ]
