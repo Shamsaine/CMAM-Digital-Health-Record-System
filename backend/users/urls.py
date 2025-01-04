@@ -1,7 +1,7 @@
 from django.urls import path, include
+from .views import UserProfileView
 
+app_name = 'users'  # Namespace for the app
 urlpatterns = [
-    # Include Django Allauth URLs for account management
-    path('accounts/', include('allauth.urls')),
-    path('profile/', UserProfileView.as_view(), name='users'),  # Custom route for profile
+    path('profile/', UserProfileView.as_view(), name='profile'),
 ]
