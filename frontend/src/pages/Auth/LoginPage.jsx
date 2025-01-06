@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { login } from '../../services/api'; // Import the login function from api.js
 import './LoginPage.module.css';
 
 const LoginPage = () => {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
+  const navigate = useNavigate(); // Hook for programmatic navigation
 
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -14,13 +15,17 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/token/', credentials);
-      localStorage.setItem('accessToken', response.data.access);
-      localStorage.setItem('refreshToken', response.data.refresh);
+      // Call the login API function
+      /*const response = await login(credentials.username, credentials.password);*/
+      await login(credentials.username, credentials.password);
       setError('');
       alert('Login successful');
+
+      // Navigate to dashboard on successful login
+      navigate('/dashboard');
     } catch (err) {
-      setError('Invalid username or password');
+      // Set a more descriptive error message if available
+      setError(err.detail || 'Invalid username or password');
     }
   };
 
@@ -45,7 +50,7 @@ const LoginPage = () => {
           onChange={handleChange}
           required
         />
-        <button type="submit"><Link to="/dashboard">Login</Link></button>
+        <button type="submit">Login</button>
         <div className="password-reset-link">
           <a href="/password-reset">Forgot Password?</a>
         </div>
