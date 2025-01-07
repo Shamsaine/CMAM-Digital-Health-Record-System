@@ -12,9 +12,9 @@ import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 
 // Import new pages
-import LoginPage from './pages/Auth/LoginPage';
-import PasswordResetPage from './pages/Auth/PasswordResetPage';
-import PasswordResetConfirmPage from './pages/Auth/PasswordResetConfirmPage';
+import LoginPage from './pages/auth/LoginPage';
+import PasswordResetPage from './pages/auth/PasswordResetPage';
+import PasswordResetConfirmPage from './pages/auth/PasswordResetConfirmPage';
 
 function App() {
   return (
