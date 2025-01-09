@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import Group
 from django.contrib.auth.tokens import default_token_generator
-from django.utils.http import urlsafe_base64_encode
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.core.mail import send_mail
 from rest_framework.views import APIView
@@ -9,6 +9,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import status
 from users.models import CustomUser
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 class UserProfileView(APIView):
@@ -83,3 +85,15 @@ class PasswordResetConfirmView(APIView):
         user.save()
 
         return Response({'message': 'Password has been reset successfully.'}, status=status.HTTP_200_OK)
+
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        # Add custom claims here
+        token['username'] = user.username
+        return token
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
