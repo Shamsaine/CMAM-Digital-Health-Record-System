@@ -23,20 +23,12 @@ export const login = async (username, password) => {
 
 // Fetch posts
 export const fetchPosts = async () => {
-  const response = await axios.get(BASE_URL_POSTS, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-    },
-  });
+  const response = await axios.get(BASE_URL_POSTS);
   return response.data;
 };
 
 // Create a new post
-export const createPost = async (post) => {
-  const response = await axios.post(BASE_URL_POSTS, post, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-    },
-  });
+export const createPost = async (postData) => {
+  const response = await axios.post(BASE_URL_POSTS, postData);
   return response.data;
 };
