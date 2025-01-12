@@ -1,30 +1,67 @@
+/* Navbar.module.css */
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #007bff;
-    color: white;
-    padding: 1rem 2rem;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #0056b3;
+  color: white;
+}
+
+.logo a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.navLinks {
+  display: flex;
+  gap: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.navLinks a {
+  text-decoration: none;
+  color: white;
+  font-size: 1rem;
+}
+
+.navLinks.open {
+  display: flex;
+}
+
+.toggleButton {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 25px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.bar {
+  height: 3px;
+  width: 100%;
+  background-color: white;
+  border-radius: 5px;
+}
+
+@media (max-width: 768px) {
   .navLinks {
-    list-style: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #0056b3;
+    width: 200px;
+    transform: translateX(100%);
+  }
+
+  .navLinks.open {
+    transform: translateX(0);
+  }
+
+  .toggleButton {
     display: flex;
-    gap: 1rem;
   }
-  
-  .navLinks a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-  }
-  
-  .navLinks a:hover {
-    text-decoration: underline;
-  }
-  
-  .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
+}

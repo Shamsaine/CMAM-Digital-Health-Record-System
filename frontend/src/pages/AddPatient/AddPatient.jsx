@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AddProgressRecord from "../../components/AddProgressRecord/AddProgressRecord"; // Import the AddProgressRecord component
+import { createPatient } from "../../services/api"; // Import the createPatient function
 
 function AddPatient() {
   const [formData, setFormData] = useState({
@@ -26,19 +27,7 @@ function AddPatient() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Submitting form data:", formData); // Debugging: Log form data
-    fetch("/api/patients/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return response.json().then((errorData) => {
-            throw new Error(JSON.stringify(errorData));
-          });
-        }
-        return response.json();
-      })
+    createPatient(formData)
       .then((data) => {
         console.log("Response data:", data); // Debugging: Log response data
         if (data.id) {
