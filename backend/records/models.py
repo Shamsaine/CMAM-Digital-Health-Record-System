@@ -1,7 +1,8 @@
 from django.db import models
+import uuid
 
 class Patient(models.Model):
-    patient_id = models.CharField(max_length=50, unique=True)
+    patient_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     # Child Information
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)

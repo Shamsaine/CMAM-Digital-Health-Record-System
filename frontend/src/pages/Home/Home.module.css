@@ -3,9 +3,9 @@
 }
 
 .hero {
-  background: linear-gradient(to right, rgba(0, 123, 255, 0.7), rgba(0, 86, 179, 0.7)), 
-              url('./heroimage.jpeg') no-repeat center center;
+  background: url('./heroimage.jpeg') no-repeat center center;
   background-size: cover;
+  margin-top: 10px;
   color: white;
   text-align: center;
   padding: 4rem 2rem;
@@ -13,33 +13,42 @@
 }
 
 .hero h1 {
-  font-size: 2.5rem;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: bolder;
+  font-size: 3rem;
+  margin: 50% auto;
   margin-bottom: 1rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Optional: enhances text visibility */
 }
 
 .hero p {
+  font-family: cursive;
+  color: whitesmoke;
+  font-weight: bolder;
   margin: 1rem 0;
-  font-size: 1.2rem;
+  font-size: 2rem;
   line-height: 1.5;
 }
 
 .cta {
   padding: 0.75rem 1.5rem;
-  background-color: #ffcb05;
+  background-color: rgb(38, 114, 165);
   border: none;
   border-radius: 5px;
-  font-size: 1rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+  font-family: cursive;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .cta:hover {
-  background-color: #ffb700;
+  background-color: rgb(98, 162, 206);
 }
 
 .features, .about {
-  padding: 2rem;
+  margin: 10% auto;
+  padding: 5rem;
   text-align: center;
   background-color: #f4f4f4; /* Optional: light background for sections */
 }
@@ -49,13 +58,14 @@
   flex-wrap: wrap; /* Ensures responsiveness */
   gap: 1rem;
   justify-content: center;
-  margin-top: 1rem;
+  margin-top: 5%;
 }
 
 .card {
   background: #f8f9fa;
   border: 1px solid #ddd;
-  padding: 1rem;
+  padding: 2rem;
+  margin: 2rem;
   width: calc(100% - 2rem); /* Responsive width */
   max-width: 300px; /* Limit max width */
   border-radius: 5px;

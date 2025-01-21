@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { createProgressRecord } from "../../services/api"; // Import the createProgressRecord function
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function AddProgressRecord({ patientId }) {
   const [formData, setFormData] = useState({
-    patient_id: patientId,
+    patient: patientId,
     date: "",
     weight: "",
     height: "",
@@ -17,32 +19,29 @@ function AddProgressRecord({ patientId }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("/api/progress-records/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => {
-        if (response.ok) {
-          alert("Progress record added successfully!");
-          setFormData({
-            patient_id: patientId,
-            date: "",
-            weight: "",
-            height: "",
-            muac: "",
-            whz_score: "",
-            health_status: "",
-            therapeutic_food_provided: false,
-            supplements: "",
-            lab_results: "",
-            follow_up_notes: "",
-          });
-        } else {
-          alert("Failed to add progress record. Please try again.");
-        }
+    console.log("Submitting progress record data:", formData); // Debugging: Log form data
+    createProgressRecord(formData)
+      .then((data) => {
+        console.log("Response data:", data); // Debugging: Log response data
+        alert("Progress record added successfully!");
+        setFormData({
+          patient: patientId,
+          date: "",
+          weight: "",
+          height: "",
+          muac: "",
+          whz_score: "",
+          health_status: "",
+          therapeutic_food_provided: false,
+          supplements: "",
+          lab_results: "",
+          follow_up_notes: "",
+        });
       })
-      .catch(() => alert("An error occurred."));
+      .catch((error) => {
+        console.error("An error occurred:", error); // Debugging: Log error
+        alert(`An error occurred: ${error.message}`);
+      });
   };
 
   const handleChange = (e) => {
@@ -54,23 +53,56 @@ function AddProgressRecord({ patientId }) {
   };
 
   return (
-    <div className="add-progress-record">
+    <div className="container">
       <h2>Add Progress Record</h2>
-      <form onSubmit={handleSubmit}>
-        <input type="date" name="date" onChange={handleChange} value={formData.date} required />
-        <input type="number" name="weight" placeholder="Weight (kg)" onChange={handleChange} value={formData.weight} required />
-        <input type="number" name="height" placeholder="Height (cm)" onChange={handleChange} value={formData.height} />
-        <input type="number" name="muac" placeholder="MUAC (cm)" onChange={handleChange} value={formData.muac} required />
-        <input type="number" name="whz_score" placeholder="WHZ Score" onChange={handleChange} value={formData.whz_score} />
-        <textarea name="health_status" placeholder="Health Status" onChange={handleChange} value={formData.health_status} required />
-        <label>
-          <input type="checkbox" name="therapeutic_food_provided" onChange={handleChange} checked={formData.therapeutic_food_provided} />
-          Therapeutic Food Provided
-        </label>
-        <textarea name="supplements" placeholder="Supplements" onChange={handleChange} value={formData.supplements} />
-        <textarea name="lab_results" placeholder="Lab Results" onChange={handleChange} value={formData.lab_results} />
-        <textarea name="follow_up_notes" placeholder="Follow-up Notes" onChange={handleChange} value={formData.follow_up_notes} />
-        <button type="submit">Add Progress Record</button>
+      <form className="row g-3" onSubmit={handleSubmit}>
+        <div className="col-md-6">
+          <label htmlFor="date" className="form-label">Date</label>
+          <input type="date" className="form-control" id="date" name="date" value={formData.date} onChange={handleChange} required />
+        </div>
+        <div className="col-md-6">
+          <label htmlFor="weight" className="form-label">Weight (kg)</label>
+          <input type="number" className="form-control" id="weight" name="weight" value={formData.weight} onChange={handleChange} required />
+        </div>
+        <div className="col-md-6">
+          <label htmlFor="height" className="form-label">Height (cm)</label>
+          <input type="number" className="form-control" id="height" name="height" value={formData.height} onChange={handleChange} />
+        </div>
+        <div className="col-md-6">
+          <label htmlFor="muac" className="form-label">MUAC (cm)</label>
+          <input type="number" className="form-control" id="muac" name="muac" value={formData.muac} onChange={handleChange} required />
+        </div>
+        <div className="col-md-6">
+          <label htmlFor="whz_score" className="form-label">WHZ Score</label>
+          <input type="number" className="form-control" id="whz_score" name="whz_score" value={formData.whz_score} onChange={handleChange} />
+        </div>
+        <div className="col-12">
+          <label htmlFor="health_status" className="form-label">Health Status</label>
+          <textarea className="form-control" id="health_status" name="health_status" value={formData.health_status} onChange={handleChange} required></textarea>
+        </div>
+        <div className="col-12">
+          <div className="form-check">
+            <input className="form-check-input" type="checkbox" id="therapeutic_food_provided" name="therapeutic_food_provided" onChange={handleChange} checked={formData.therapeutic_food_provided} />
+            <label className="form-check-label" htmlFor="therapeutic_food_provided">
+              Therapeutic Food Provided
+            </label>
+          </div>
+        </div>
+        <div className="col-12">
+          <label htmlFor="supplements" className="form-label">Supplements</label>
+          <textarea className="form-control" id="supplements" name="supplements" value={formData.supplements} onChange={handleChange}></textarea>
+        </div>
+        <div className="col-12">
+          <label htmlFor="lab_results" className="form-label">Lab Results</label>
+          <textarea className="form-control" id="lab_results" name="lab_results" value={formData.lab_results} onChange={handleChange}></textarea>
+        </div>
+        <div className="col-12">
+          <label htmlFor="follow_up_notes" className="form-label">Follow-up Notes</label>
+          <textarea className="form-control" id="follow_up_notes" name="follow_up_notes" value={formData.follow_up_notes} onChange={handleChange}></textarea>
+        </div>
+        <div className="col-12">
+          <button type="submit" className="btn btn-primary">Add Record</button>
+        </div>
       </form>
     </div>
   );

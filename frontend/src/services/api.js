@@ -17,8 +17,23 @@ export const login = async (username, password) => {
     localStorage.setItem('refreshToken', response.data.refresh);
     return response.data;
   } catch (error) {
-    console.error('Login failed:', error.response.data);
-    throw error.response.data;
+    console.error('Login failed:', error.response ? error.response.data : error.message);
+    throw error.response ? error.response.data : error.message;
+  }
+};
+
+// Refresh token
+const refreshToken = async () => {
+  try {
+    const refreshToken = localStorage.getItem('refreshToken');
+    const response = await axios.post(`${BASE_URL_AUTH}refresh/`, {
+      refresh: refreshToken,
+    });
+    localStorage.setItem('accessToken', response.data.access);
+    return response.data.access;
+  } catch (error) {
+    console.error('Token refresh failed:', error.response ? error.response.data : error.message);
+    throw error.response ? error.response.data : error.message;
   }
 };
 
@@ -30,8 +45,38 @@ export const fetchPosts = async () => {
 
 // Create a new post
 export const createPost = async (postData) => {
-  const response = await axios.post(BASE_URL_POSTS, postData);
-  return response.data;
+  let token = localStorage.getItem('accessToken'); // Declare token in the outer scope
+  try {
+    console.log("Token:", token); // Debugging: Log token
+
+    const response = await axios.post(BASE_URL_POSTS, postData, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Include the token in the headers
+      },
+    });
+    console.log("Response:", response); // Debugging: Log response
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 401 && error.response.data.code === 'token_not_valid') {
+      // Token is not valid, try to refresh it
+      try {
+        token = await refreshToken();
+        const response = await axios.post(BASE_URL_POSTS, postData, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the new token in the headers
+          },
+        });
+        console.log("Response after token refresh:", response); // Debugging: Log response
+        return response.data;
+      } catch (refreshError) {
+        console.error('Token refresh failed:', refreshError.response ? refreshError.response.data : refreshError.message);
+        throw refreshError.response ? refreshError.response.data : refreshError.message;
+      }
+    } else {
+      console.error('Creating post failed:', error.response ? error.response.data : error.message);
+      throw error.response ? error.response.data : error.message;
+    }
+  }
 };
 
 // Fetch patients
@@ -48,11 +93,72 @@ export const fetchPatients = async () => {
 
 // Create a new patient
 export const createPatient = async (patientData) => {
+  let token = localStorage.getItem('accessToken'); // Declare token in the outer scope
   try {
-    const response = await axios.post(`${BASE_URL_RECORDS}patients/`, patientData);
+    console.log("Token:", token); // Debugging: Log token
+
+    const response = await axios.post(`${BASE_URL_RECORDS}patients/`, patientData, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Include the token in the headers
+      },
+    });
+    console.log("Response:", response); // Debugging: Log response
     return response.data;
   } catch (error) {
-    console.error('Creating patient failed:', error.response.data);
-    throw error.response.data;
+    if (error.response && error.response.status === 401 && error.response.data.code === 'token_not_valid') {
+      // Token is not valid, try to refresh it
+      try {
+        token = await refreshToken();
+        const response = await axios.post(`${BASE_URL_RECORDS}patients/`, patientData, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the new token in the headers
+          },
+        });
+        console.log("Response after token refresh:", response); // Debugging: Log response
+        return response.data;
+      } catch (refreshError) {
+        console.error('Token refresh failed:', refreshError.response ? refreshError.response.data : refreshError.message);
+        throw refreshError.response ? refreshError.response.data : refreshError.message;
+      }
+    } else {
+      console.error('Creating patient failed:', error.response ? error.response.data : error.message);
+      throw error.response ? error.response.data : error.message;
+    }
+  }
+};
+
+// Create a new progress record
+export const createProgressRecord = async (progressData) => {
+  let token = localStorage.getItem('accessToken'); // Declare token in the outer scope
+  try {
+    console.log("Token:", token); // Debugging: Log token
+
+    const response = await axios.post(`${BASE_URL_RECORDS}progress-records/`, progressData, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Include the token in the headers
+      },
+    });
+    console.log("Response:", response); // Debugging: Log response
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 401 && error.response.data.code === 'token_not_valid') {
+      // Token is not valid, try to refresh it
+      try {
+        token = await refreshToken();
+        const response = await axios.post(`${BASE_URL_RECORDS}progress-records/`, progressData, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the new token in the headers
+          },
+        });
+        console.log("Response after token refresh:", response); // Debugging: Log response
+        return response.data;
+      } catch (refreshError) {
+        console.error('Token refresh failed:', refreshError.response ? refreshError.response.data : refreshError.message);
+        throw refreshError.response ? refreshError.response.data : refreshError.message;
+      }
+    } else {
+      console.error('Creating progress record failed:', error.response ? error.response.data : error.message);
+      throw error.response ? error.response.data : error.message;
+    }
   }
 };

@@ -9,7 +9,7 @@ from .views import (
 urlpatterns = [
     # Patient Endpoints
     path('patients/', PatientListCreateView.as_view(), name='patient_list_create'),
-    path('patients/<int:pk>/', PatientRetrieveUpdateDestroyView.as_view(), name='patient_detail'),
+    path('patients/<uuid:pk>/', PatientRetrieveUpdateDestroyView.as_view(), name='patient_detail'),
     
     # Progress Record Endpoints
     path('progress-records/', ProgressRecordListCreateView.as_view(), name='progress_record_list_create'),

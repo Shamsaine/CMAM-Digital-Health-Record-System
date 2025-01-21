@@ -1,10 +1,13 @@
 import React from 'react';
 import Feed from '../../components/Feed/Feed'; // Ensure Feed is correctly implemented
 import styles from './Home.module.css'; // Ensure styles are defined in Home.module.css
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const Home = () => {
   return (
-    <div className={styles.home}>
+    <div class='container-fluid'>
+          <div className={styles.home}>
       {/* Hero Section */}
       <header className={styles.hero}>
         <h1>Streamline CMAM Program Data Management</h1>
@@ -31,8 +34,8 @@ const Home = () => {
             <p>Leverage insights for better decision-making.</p>
           </div>
           <div className={styles.card}>
-            <h3>Advanced Analytics</h3>
-            <p>Leverage insights for better decision-making.</p>
+            <h3>Research and Report</h3>
+            <p>Publishing research and analytical reports on the program</p>
           </div>
         </div>
       </section>
@@ -51,6 +54,7 @@ const Home = () => {
           and data analysis for healthcare professionals.
         </p>
       </section>
+    </div>
     </div>
   );
 };

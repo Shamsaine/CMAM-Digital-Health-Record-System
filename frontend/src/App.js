@@ -15,6 +15,7 @@ import Footer from './components/Footer/Footer';
 import LoginPage from './pages/auth/LoginPage';
 import PasswordResetPage from './pages/auth/PasswordResetPage';
 import PasswordResetConfirmPage from './pages/auth/PasswordResetConfirmPage';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 function App() {
   return (

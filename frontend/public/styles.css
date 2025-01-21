@@ -11,7 +11,7 @@ body, html {
 
 #root {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1200;
   margin: 20px auto;
   padding: 20px;
   background-color: #fff;
@@ -41,7 +41,7 @@ body, html {
   font-size: 1.5em;
   background: none;
   border: none;
-  color: white;
+  color: rgb(76, 61, 207);
   cursor: pointer;
 }
 
