@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './PasswordResetPage.module.css';
 
 const PasswordResetPage = () => {
@@ -17,21 +18,26 @@ const PasswordResetPage = () => {
   };
 
   return (
-    <div className="password-reset-container">
-      <form className="password-reset-form" onSubmit={handleSubmit}>
-        <h2>Password Reset</h2>
-        <p>Enter your email to receive a password reset link.</p>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <button type="submit">Send Reset Link</button>
-        {message && <p className="message">{message}</p>}
-      </form>
+    <div className="password-reset-page d-flex justify-content-center align-items-center vh-100">
+      <div className="password-reset-container p-4 border rounded bg-light">
+        <h2 className="mb-4 text-center">Password Reset</h2>
+        <p className="text-center">Enter your email to receive a password reset link.</p>
+        <form className="password-reset-form" onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <input
+              type="email"
+              className="form-control"
+              name="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" className="btn btn-primary w-100">Send Reset Link</button>
+          {message && <p className="message text-center mt-3">{message}</p>}
+        </form>
+      </div>
     </div>
   );
 };

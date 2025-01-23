@@ -4,6 +4,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.core.mail import send_mail
+from django.conf import settings
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -11,6 +12,8 @@ from rest_framework import status
 from users.models import CustomUser
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from .serializers import CustomUserSerializer
+from .serializers import CustomTokenObtainPairSerializer
 
 
 class UserProfileView(APIView):
@@ -53,7 +56,7 @@ class PasswordResetRequestView(APIView):
         send_mail(
             'Password Reset Request',
             f'Use the link below to reset your password:\n\n{reset_link}',
-            'no-reply@example.com',  # Replace with DEFAULT_FROM_EMAIL
+            settings.DEFAULT_FROM_EMAIL,  # Use the default from email from settings
             [user.email],
             fail_silently=False,
         )
@@ -87,13 +90,22 @@ class PasswordResetConfirmView(APIView):
         return Response({'message': 'Password has been reset successfully.'}, status=status.HTTP_200_OK)
 
 
-class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
-    @classmethod
-    def get_token(cls, user):
-        token = super().get_token(user)
-        # Add custom claims here
-        token['username'] = user.username
-        return token
-
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
+
+
+class UserCreateView(APIView):
+    def post(self, request):
+        serializer = CustomUserSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            # Send email
+            send_mail(
+                'Welcome to CMAM Records Manager',
+                'Thank you for registering.',
+                settings.DEFAULT_FROM_EMAIL,
+                [user.email],
+                fail_silently=False,
+            )
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

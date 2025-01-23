@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoginForm from './LoginForm'; // Import the LoginForm component from the same folder
 import { login } from '../../services/api'; // Import the login function from api.js
-import './LoginPage.module.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './LoginPage.module.css'; // Import custom CSS for additional styling
 
 const LoginPage = () => {
   const [error, setError] = useState('');
@@ -15,18 +16,17 @@ const LoginPage = () => {
       alert('Login successful');
       navigate('/dashboard');
     } catch (err) {
-      setError(err.response?.data?.detail || 'Invalid username or password');
+      setError(err.detail || 'Invalid username or password');
     }
   };
 
   return (
-    <div className="page-container">
-      <div className="login-container">
-        <h2>Login</h2>
-        {error && <p className="error">{error}</p>}
+    <div className="login-page d-flex justify-content-center align-items-center">
+      <div className="login-container p-4 m-5 border rounded bg-light">
+        {error && <p className="text-danger text-center">{error}</p>}
         <LoginForm onLogin={handleLogin} /> {/* Use the LoginForm component */}
-        <div className="password-reset-link">
-          <a href="/password-reset">Forgot Password?</a>
+        <div className="text-center mt-3">
+          <a href="/password-reset" className="text-decoration-none">Forgot Password?</a>
         </div>
       </div>
     </div>

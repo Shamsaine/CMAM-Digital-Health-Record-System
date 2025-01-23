@@ -1,33 +1,47 @@
 /* Navbar.module.css */
 .navbar {
-  background-color: #f8f9fa !important; /* Light background color */
+  border-radius: 10px;
+  background-color: #007bff !important; /* Blue background color */
 }
 
 .navbar-brand {
-  color: #000000 !important; /* Black text color for the brand */
+  color: #ffffff !important; /* White text color for the brand */
   margin-right: 2rem; /* Ample space between the title and the nav links */
 }
 
 .nav-link {
-  color: #000000 !important; /* Black text color for nav links */
+  color: #ffffff !important; /* White text color for nav links */
 }
 
 .nav-link:hover {
-  color: #007bff !important; /* Blue text color on hover */
+  color: #cccccc !important; /* Light grey text color on hover */
 }
 
 .form-control {
   max-width: 200px; /* Limit the width of the search input */
 }
 
-.btn-outline-success {
-  color: #000000 !important; /* Black text color for the button */
-  border-color: #000000 !important; /* Black border color for the button */
+.btn-outline-light {
+  color: #ffffff !important; /* White text color for the button */
+  border-color: #ffffff !important; /* White border color for the button */
 }
 
-.btn-outline-success:hover {
-  background-color: #000000 !important; /* Black background color on hover */
-  color: #ffffff !important; /* White text color on hover */
+.btn-outline-light:hover {
+  background-color: #f5f2f2 !important; /* White background color on hover */
+  color: #007bff !important; /* Blue text color on hover */
+}
+
+.dropdown-menu {
+  background-color: #e9eef3 !important; /* Light background color for dropdown */
+}
+
+.dropdown-item {
+  color: #000000 !important; /* Black text color for dropdown items */
+}
+
+.dropdown-item:hover {
+  /*background-color: #e9ecef !important; /* Light grey background color on hover */
+  color: #000000 !important; /* Black text color on hover */
 }
 
 /*

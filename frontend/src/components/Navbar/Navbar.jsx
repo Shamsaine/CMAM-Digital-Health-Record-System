@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Navbar.module.css'; // Import custom CSS for additional styling
+import styles from './Navbar.module.css'; // Import custom CSS for additional styling
 
 const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Example state for authentication
+  const navigate = useNavigate(); // Hook to access the navigate function
 
   useEffect(() => {
     // Example: Check if the user is authenticated
@@ -12,8 +13,17 @@ const Navbar = () => {
     setIsAuthenticated(!!token);
   }, []);
 
+  const handleLogout = () => {
+    // Clear tokens from local storage
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    setIsAuthenticated(false);
+    // Redirect to the login page or home page
+    navigate('/login');
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav className={`navbar navbar-expand-lg navbar-dark ${styles.navbar}`}>
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">CMAM Records Manager</Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +41,7 @@ const Navbar = () => {
               <a className="nav-link dropdown-toggle" href="#" id="dataDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Data
               </a>
-              <ul className="dropdown-menu" aria-labelledby="dataDropdown">
+              <ul className={`dropdown-menu ${styles.dropdownMenu}`} aria-labelledby="dataDropdown">
                 <li><Link className="dropdown-item" to="/data/overview">Overview</Link></li>
                 <li><Link className="dropdown-item" to="/data/statistics">Statistics</Link></li>
               </ul>
@@ -40,7 +50,7 @@ const Navbar = () => {
               <a className="nav-link dropdown-toggle" href="#" id="researchDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Research
               </a>
-              <ul className="dropdown-menu" aria-labelledby="researchDropdown">
+              <ul className={`dropdown-menu ${styles.dropdownMenu}`} aria-labelledby="researchDropdown">
                 <li><Link className="dropdown-item" to="/research/papers">Papers</Link></li>
                 <li><Link className="dropdown-item" to="/research/projects">Projects</Link></li>
               </ul>
@@ -60,7 +70,7 @@ const Navbar = () => {
                   <Link className="nav-link" to="/profile">Profile</Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/logout">Logout</Link>
+                  <button className="nav-link btn btn-link" onClick={handleLogout}>Logout</button>
                 </li>
               </>
             ) : (
