@@ -39,8 +39,8 @@ function AddProgressRecord({ patientId }) {
         });
       })
       .catch((error) => {
-        console.error("An error occurred:", error); // Debugging: Log error
-        alert(`An error occurred: ${error.message}`);
+        console.error("An error occurred:", error.response ? error.response.data : error.message); // Debugging: Log error
+        alert(`An error occurred: ${error.response ? JSON.stringify(error.response.data) : error.message}`);
       });
   };
 

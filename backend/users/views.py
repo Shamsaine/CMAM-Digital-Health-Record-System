@@ -109,3 +109,12 @@ class UserCreateView(APIView):
             )
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class PatientsListView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        patients = CustomUser.objects.all()
+        serializer = CustomUserSerializer(patients, many=True)
+        return Response(serializer.data)

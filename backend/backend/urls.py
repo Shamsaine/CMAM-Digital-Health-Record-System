@@ -34,4 +34,5 @@ urlpatterns = [
     # Routes for accounts or user profiles
     path('api/accounts/', include('allauth.urls')),  # Example for Django Allauth
     path('api/profile/', include('users.urls')),  # Routes for the "users" app
+    path('api/', include('users.urls')),  # Include the users app URLs
 ]
