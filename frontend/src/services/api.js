@@ -5,6 +5,65 @@ const BASE_URL_POSTS = 'http://127.0.0.1:8000/api/posts/';
 const BASE_URL_AUTH = 'http://127.0.0.1:8000/api/token/';
 const BASE_URL_RECORDS = 'http://127.0.0.1:8000/api/records/';
 
+// Save tokens to localStorage
+const saveTokens = (accessToken, refreshToken) => {
+  localStorage.setItem('accessToken', accessToken);
+  if (refreshToken) localStorage.setItem('refreshToken', refreshToken);
+};
+
+// Get access token from localStorage
+const getAccessToken = () => localStorage.getItem('accessToken');
+
+// Get refresh token from localStorage
+const getRefreshToken = () => localStorage.getItem('refreshToken');
+
+// Axios instance with default settings
+const axiosInstance = axios.create({
+  baseURL: BASE_URL_POSTS,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// Interceptor for adding Authorization header
+axiosInstance.interceptors.request.use((config) => {
+  const token = getAccessToken();
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+// Interceptor for handling token refresh
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+    if (
+      error.response &&
+      error.response.status === 401 &&
+      error.response.data.code === 'token_not_valid' &&
+      !originalRequest._retry
+    ) {
+      originalRequest._retry = true;
+      try {
+        const response = await axios.post(`${BASE_URL_AUTH}refresh/`, {
+          refresh: getRefreshToken(),
+        });
+        saveTokens(response.data.access, response.data.refresh);
+        axiosInstance.defaults.headers.Authorization = `Bearer ${response.data.access}`;
+        originalRequest.headers.Authorization = `Bearer ${response.data.access}`;
+        return axiosInstance(originalRequest);
+      } catch (refreshError) {
+        console.error('Token refresh failed:', refreshError.response ? refreshError.response.data : refreshError.message);
+        localStorage.clear(); // Clear tokens if refresh fails
+        throw refreshError;
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 // Login API
 export const login = async (username, password) => {
   try {
@@ -13,8 +72,7 @@ export const login = async (username, password) => {
       password,
     });
     // Save tokens to localStorage
-    localStorage.setItem('accessToken', response.data.access);
-    localStorage.setItem('refreshToken', response.data.refresh);
+    saveTokens(response.data.access, response.data.refresh);
     return response.data;
   } catch (error) {
     console.error('Login failed:', error.response ? error.response.data : error.message);
@@ -25,11 +83,11 @@ export const login = async (username, password) => {
 // Refresh token
 const refreshToken = async () => {
   try {
-    const refreshToken = localStorage.getItem('refreshToken');
+    const refreshToken = getRefreshToken();
     const response = await axios.post(`${BASE_URL_AUTH}refresh/`, {
       refresh: refreshToken,
     });
-    localStorage.setItem('accessToken', response.data.access);
+    saveTokens(response.data.access, response.data.refresh);
     return response.data.access;
   } catch (error) {
     console.error('Token refresh failed:', error.response ? error.response.data : error.message);
@@ -45,7 +103,7 @@ export const fetchPosts = async () => {
 
 // Create a new post
 export const createPost = async (postData) => {
-  let token = localStorage.getItem('accessToken'); // Declare token in the outer scope
+  let token = getAccessToken(); // Declare token in the outer scope
   try {
     console.log("Token:", token); // Debugging: Log token
 
@@ -93,7 +151,7 @@ export const fetchPatients = async () => {
 
 // Create a new patient
 export const createPatient = async (patientData) => {
-  let token = localStorage.getItem('accessToken'); // Declare token in the outer scope
+  let token = getAccessToken(); // Declare token in the outer scope
   try {
     console.log("Token:", token); // Debugging: Log token
 
@@ -129,7 +187,7 @@ export const createPatient = async (patientData) => {
 
 // Create a new progress record
 export const createProgressRecord = async (progressData) => {
-  let token = localStorage.getItem('accessToken'); // Declare token in the outer scope
+  let token = getAccessToken(); // Declare token in the outer scope
   try {
     console.log("Token:", token); // Debugging: Log token
 

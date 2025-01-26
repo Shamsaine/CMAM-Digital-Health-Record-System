@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt.token_blacklist',
+    'rest_framework_simplejwt',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -172,6 +173,7 @@ SIMPLE_JWT = {
     'USER_ID_CLAIM': 'user_id',
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     'TOKEN_TYPE_CLAIM': 'token_type',
+    'JTI_CLAIM': 'jti',
 }
 
 # Recognition for custom user

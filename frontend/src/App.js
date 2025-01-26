@@ -36,13 +36,13 @@ function App() {
             <Route path="/posts" element={<PostsPage />} />
 
             {/* Patient Details Page */}
-            <Route path="/patients/:id" element={<PatientDetails />} />
+            <Route path="/patient/:id" element={<PatientDetails />} /> {/* Updated route path */}
 
             {/* Dashboard Page */}
             <Route path="/dashboard" element={<Dashboard />} />
 
             {/* View Patients Page */}
-            <Route path="/patients" element={<ViewPatients />} />
+            <Route path="/patients" element={<ViewPatients />} /> {/* Updated route path */}
 
             {/* Add Patient Page */}
             <Route path="/add-patient" element={<AddPatient />} />

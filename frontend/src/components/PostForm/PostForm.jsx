@@ -11,8 +11,10 @@ const PostForm = ({ onPostCreated }) => {
     e.preventDefault();
     setError(null);
     try {
-      const newPost = await createPost({ title, content });
-      onPostCreated(newPost);
+      const postData = { title, content };
+      const response = await createPost(postData);
+      console.log('Post created:', response);
+      onPostCreated(response);
       setTitle('');
       setContent('');
     } catch (error) {

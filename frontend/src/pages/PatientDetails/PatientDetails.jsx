@@ -8,17 +8,45 @@ function PatientDetails() {
   const { id } = useParams(); // Get patient ID from the URL
   const [patient, setPatient] = useState(null);
   const [progress, setProgress] = useState([]);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`/api/patients/${id}/`)
-      .then((response) => response.json())
-      .then((data) => setPatient(data));
+    const fetchPatient = async () => {
+      try {
+        const response = await fetch(`/api/records/patients/${id}/`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setPatient(data);
+      } catch (error) {
+        console.error("Error fetching patient data:", error);
+        setError(error.message);
+      }
+    };
 
-    fetch(`/api/progress-records/?patient=${id}`)
-      .then((response) => response.json())
-      .then((data) => setProgress(data));
+    const fetchProgress = async () => {
+      try {
+        const response = await fetch(`/api/records/progress-records/?patient=${id}`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setProgress(data);
+      } catch (error) {
+        console.error("Error fetching progress data:", error);
+        setError(error.message);
+      }
+    };
+
+    fetchPatient();
+    fetchProgress();
   }, [id]);
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   if (!patient) {
     return <div>Loading...</div>;

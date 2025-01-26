@@ -48,9 +48,6 @@ The platform targets stakeholders in the CMAM program, including:
 - **Google Cloud Platform (GCP)**: Scalable cloud infrastructure.
 
 #### **Additional Tools**:
-- **Celery**: For task queuing and background processing.
-- **Sentry**: Error tracking and monitoring.
-- **Swagger/OpenAPI**: Auto-generate API documentation.
 - **Jupyter Notebooks**: For exploratory data analysis and preprocessing.
 - **Tailwind CSS**: Utility-first CSS framework for styling.
 
@@ -74,9 +71,6 @@ The platform targets stakeholders in the CMAM program, including:
    - Docker containers for scalable and consistent deployments.
    - GCP for hosting the application and database.
 
-5. **Data Processing**:
-   - Python libraries (e.g., Pandas, NumPy, Matplotlib) for advanced analytics and preprocessing.
-   - Processed data served via APIs for frontend consumption.
 
 ---
 
@@ -87,8 +81,6 @@ The platform targets stakeholders in the CMAM program, including:
   - Tracks individual patient data (e.g., name, age, admission details, treatment history).
 - **Program Data Table**:
   - Consolidates program statistics and attendance records.
-- **Activity Logs Table**:
-  - Monitors user activity for audit purposes.
 
 ---
 
@@ -101,9 +93,7 @@ The platform targets stakeholders in the CMAM program, including:
    - Update and track patient progress.
 4. **Program Reporting**:
    - Generate and view summary statistics.
-5. **Data Export**:
-   - Download reports in CSV or PDF format.
-   
+  
 
 ### **Challenges and Mitigation**
 1. **Data Integration**:
@@ -117,6 +107,68 @@ The platform targets stakeholders in the CMAM program, including:
 
 ---
 
+### **Setup Instructions**
+
+Follow these steps to set up the CMAM Digital Record Platform on your local machine:
+
+#### **Prerequisites**
+1. **Python 3.8+**: Ensure Python is installed on your system.
+2. **Node.js and yarn**: Required for the frontend setup.
+4. **PostgreSQL**: Database setup.
+
+#### **Backend Setup**
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/CMAM-Digital-Health-Record-System.git
+   cd CMAM-Digital-Health-Record-System
+   ```
+
+2. Create a virtual environment and activate it:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   ```
+
+3. Install the required Python packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Set up the PostgreSQL database and update the `DATABASES` setting in `settings.py` with your database credentials.
+
+5. Apply database migrations:
+   ```bash
+   python manage.py migrate
+   ```
+
+6. Create a superuser:
+   ```bash
+   python manage.py createsuperuser
+   ```
+
+7. Start the Django development server:
+   ```bash
+   python manage.py runserver
+   ```
+
+#### **Frontend Setup**
+1. Navigate to the `frontend` directory:
+   ```bash
+   cd frontend
+   ```
+
+2. Install the required npm packages:
+   ```bash
+   yarn add
+   ```
+
+3. Start the React development server:
+   ```bash
+   yarn start
+   ```
+
+Access the application at `http://localhost:8000` for the backend and `http://localhost:3000` for the frontend.
+---
 ### **Conclusion**
 The CMAM Digital Record Platform is a groundbreaking initiative tailored to the specific needs of the CMAM program. By combining state-of-the-art technologies with a user-centric design, the platform aims to improve efficiency, ensure data integrity, and unlock new opportunities for data-driven decision-making in public health.
 
