@@ -38,18 +38,18 @@ const Navbar = () => {
               <Link className="nav-link" to="/dashboard">Dashboard</Link>
             </li>
             <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="dataDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <button className="nav-link dropdown-toggle btn btn-link" id="dataDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 Data
-              </a>
+              </button>
               <ul className={`dropdown-menu ${styles.dropdownMenu}`} aria-labelledby="dataDropdown">
                 <li><Link className="dropdown-item" to="/data/overview">Overview</Link></li>
                 <li><Link className="dropdown-item" to="/data/statistics">Statistics</Link></li>
               </ul>
             </li>
             <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="researchDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <button className="nav-link dropdown-toggle btn btn-link" id="researchDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 Research
-              </a>
+              </button>
               <ul className={`dropdown-menu ${styles.dropdownMenu}`} aria-labelledby="researchDropdown">
                 <li><Link className="dropdown-item" to="/research/papers">Papers</Link></li>
                 <li><Link className="dropdown-item" to="/research/projects">Projects</Link></li>

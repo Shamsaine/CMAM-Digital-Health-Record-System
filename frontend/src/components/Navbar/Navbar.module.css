@@ -14,7 +14,7 @@
 }
 
 .nav-link:hover {
-  color: #cccccc !important; /* Light grey text color on hover */
+  /*color: #cccccc !important; /* Light grey text color on hover */
 }
 
 .form-control {
@@ -32,6 +32,7 @@
 }
 
 .dropdown-menu {
+  color: black;
   background-color: #e9eef3 !important; /* Light background color for dropdown */
 }
 

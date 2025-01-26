@@ -20,7 +20,7 @@ function Dashboard() {
         </div>
       </div>
       <div className="text-center mt-4">
-        <Link to="/view-patients" className="btn btn-primary me-2">
+        <Link to="/patients" className="btn btn-primary me-2">
           View Patients
         </Link>
         <Link to="/add-patient" className="btn btn-success">
