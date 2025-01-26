@@ -15,6 +15,7 @@ import Footer from './components/Footer/Footer';
 import LoginPage from './pages/auth/LoginPage';
 import PasswordResetPage from './pages/auth/PasswordResetPage';
 import PasswordResetConfirmPage from './pages/auth/PasswordResetConfirmPage';
+import AddProgressRecord from './pages/AddPatient/AddProgressRecord';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 function App() {
@@ -45,6 +46,9 @@ function App() {
 
             {/* Add Patient Page */}
             <Route path="/add-patient" element={<AddPatient />} />
+
+            {/* Add Progress Record Page */}
+            <Route path="/add-progress-record/:patientId" element={<AddProgressRecord />} />
 
             {/* Authentication Pages */}
             <Route path="/login" element={<LoginPage />} />

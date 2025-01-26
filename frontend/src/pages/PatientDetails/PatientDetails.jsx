@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import WeightChart from "./Charts/WeightChart";
 import MUACChart from "./Charts/MUACChart";
 import WHZChart from "./Charts/WHZChart";
@@ -8,6 +8,7 @@ function PatientDetails() {
   const { id } = useParams(); // Get patient ID from the URL
   const [patient, setPatient] = useState(null);
   const [progress, setProgress] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`/api/patients/${id}/`)
@@ -50,6 +51,7 @@ function PatientDetails() {
       <div className="actions">
         <button onClick={() => alert("Marked as Critical!")}>Mark as Critical</button>
         <button onClick={() => alert("Marked as Defaulter!")}>Mark as Defaulter</button>
+        <button onClick={() => navigate(`/add-progress-record/${id}`)} className="btn btn-primary">Add Progress Record</button> {/* Button to redirect to AddProgressRecord page */}
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AddProgressRecord from "../../components/AddProgressRecord/AddProgressRecord"; // Import the AddProgressRecord component
+import { useNavigate } from "react-router-dom";
 import { createPatient } from "../../services/api"; // Import the createPatient function
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -22,7 +22,7 @@ function AddPatient() {
     nationality: "",
   });
 
-  const [patientId, setPatientId] = useState(null);
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,24 +32,7 @@ function AddPatient() {
         console.log("Response data:", data); // Debugging: Log response data
         if (data.patient_id) {
           alert("Patient registered successfully!");
-          setPatientId(data.patient_id);
-          setFormData({
-            first_name: "",
-            last_name: "",
-            date_of_birth: "",
-            gender: "",
-            address: "",
-            guardian_name: "",
-            guardian_phone: "",
-            guardian_relationship: "",
-            emergency_contact_name: "",
-            emergency_contact_phone: "",
-            enrollment_date: "",
-            program_status: "active",
-            facility: "",
-            ethnicity: "",
-            nationality: "",
-          });
+          navigate(`/patient/${data.patient_id}`); // Redirect to PatientDetails page
         } else {
           alert("Registration failed. Please try again.");
         }
@@ -140,7 +123,6 @@ function AddPatient() {
           <button type="submit" className="btn btn-primary">Register</button>
         </div>
       </form>
-      {patientId && <AddProgressRecord patientId={patientId} />} {/* Include the AddProgressRecord component */}
     </div>
   );
 }
